@@ -1,0 +1,2 @@
+setuptools==39.0.1
+cfscrape==1.9.5
