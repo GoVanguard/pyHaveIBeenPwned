@@ -29,7 +29,7 @@ class pyHaveIBeenPwned():
             return resultContent
 
     def getAccountBreaches(self, email, domain=None):
-        urlEndpoint = "breachedAccount/"
+        urlEndpoint = "breachedaccount/"
         if domain:
             url = "{0}{1}{2}?domain={3}".format(self.apiEndpoint, urlEndpoint, email, domain)
         else:
