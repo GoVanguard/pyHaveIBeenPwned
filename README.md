@@ -1,4 +1,4 @@
-pyHaveIBeenPwned (https://govanguard.io)
+pyHaveIBeenPwned (https://govanguard.com)
 ==
 [![Build Status](https://travis-ci.com/GoVanguard/pyHaveIBeenPwned.svg?branch=master)](https://travis-ci.com/GoVanguard/pyHaveIBeenPwned)
 [![Known Vulnerabilities](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned?targetFile=requirements.txt)
