@@ -1,6 +1,6 @@
 pyHaveIBeenPwned (https://govanguard.com)
 ==
-[![Build Status](https://travis-ci.com/GoVanguard/pyHaveIBeenPwned.svg?branch=master)](https://travis-ci.com/GoVanguard/pyHaveIBeenPwned)
+[![Build Status](https://github.com/GoVanguard/pyHaveIBeenPwned/actions/workflows/package-installation-test.yml/badge.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned?targetFile=requirements.txt)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bd227c3a2239321eec05/maintainability)](https://codeclimate.com/github/GoVanguard/pyHaveIBeenPwned/maintainability)
 
