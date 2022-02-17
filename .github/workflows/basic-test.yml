@@ -2,7 +2,6 @@ name: Test Python Application
 on:
   schedule:
     - cron: '0 0 * * *'
-on:
   push:
     branches: [ main ]
 
