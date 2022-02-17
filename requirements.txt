@@ -1,3 +1,2 @@
 setuptools==39.0.1
 cfscrape==1.9.5
-pyflakes==2.4.0
