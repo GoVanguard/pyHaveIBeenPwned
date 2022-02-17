@@ -1,4 +1,4 @@
-name: build status
+name: test status
 
 on:
   push:
@@ -35,18 +35,3 @@ jobs:
         user: __token__
         password: ${{ secrets.TEST_PYPI_GOVANGUARD_MASTER_API_TOKEN }}
         repository_url: https://test.pypi.org/legacy/
-
-on:
-  release:
-  
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    - name: Publish distribution package to PyPI
-      if: startsWith(github.ref, 'refs/tags')
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_GOVANGUARD_MASTER_API_TOKEN }}
-        repository_url: https://pypi.org/legacy/
