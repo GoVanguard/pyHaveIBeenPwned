@@ -1,3 +1,5 @@
+name: build status
+
 on:
   release:
       types: [created]
