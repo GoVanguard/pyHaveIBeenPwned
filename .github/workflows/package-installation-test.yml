@@ -1,0 +1,37 @@
+name: test status
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Upgrade Pip
+      run: python3 -m pip install --upgrade pip
+
+    - name: Run Installation Test
+      run: python3 -m pip install -r requirements.txt
+    
+    - name: Install pypa/build
+      run: python3 -m pip install build --user
+    
+    - name: Build a binary wheel and a source tarball
+      run: python3 -m build --sdist --wheel --outdir dist/.
+      
+    - name: Publish distribution package to Test PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        user: __token__
+        password: ${{ secrets.TEST_PYPI_GOVANGUARD_MASTER_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
