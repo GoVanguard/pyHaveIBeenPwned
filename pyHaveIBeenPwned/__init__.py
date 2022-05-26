@@ -62,7 +62,7 @@ class pyHaveIBeenPwned():
         return r
 
     def testMe(self):
-        t = self.getAccountBreaches("foo@bar.com") 
+        t = self.getAccountBreaches("foo@bar.com")
         return t
 
 if __name__ == "__main__":
