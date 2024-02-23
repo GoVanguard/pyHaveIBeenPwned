@@ -1,0 +1,42 @@
+name: Python Application Workflow
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'  # Specify your Python version
+
+    - name: Install Dependencies
+      run: |
+        pip install flake8
+        pip install semgrep
+        pip install setuptools wheel twine  # For packaging and uploading
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=128 --statistics
+
+    - name: Security scan with Semgrep
+      run: |
+        semgrep --config=p/r2c
+
+    - name: Build and publish
+      if: success()  # This will run if previous steps were successful
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/* 
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPIUSER }}  # Set in your repo secrets
+        TWINE_PASSWORD: ${{ secrets.PYPIPASSWORD }}  # Set in your repo secrets
