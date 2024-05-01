@@ -76,6 +76,12 @@ jobs:
       run: |
         semgrep --config=p/r2c
 
+    - name: Patch version using sed and awk (not because we can't pull the commited update in prepare)
+      run: |
+        version=$(sed -n "s/^ *version=['\"]\([^'\"]*\)['\"],/\1/p" setup.py)
+        new_version=$(echo $version | awk -F. -v OFS=. '{$NF += 1; print}')
+        sed -i "s;$version;$new_version;g" setup.py
+
     - name: Build the package
       run: python setup.py sdist bdist_wheel
 
