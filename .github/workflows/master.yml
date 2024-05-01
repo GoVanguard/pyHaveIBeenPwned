@@ -2,9 +2,8 @@ name: Python package
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - 'package*'
   workflow_dispatch:
 
 jobs:
@@ -22,7 +21,29 @@ jobs:
         version=$(sed -n "s/^ *version=['\"]\([^'\"]*\)['\"],/\1/p" setup.py)
         new_version=$(echo $version | awk -F. -v OFS=. '{$NF += 1; print}')
         sed -i "s/version=['\"]$version['\"]\b/version='$new_version'/g" setup.py
-        echo "::set-output name=new_version::$new_version"
+        echo "new_version=$new_version" >> $GITHUB_ENV
+
+    - name: Get last commit details
+      id: last_commit
+      run: |
+        commit_message=$(git log -1 --pretty=%B)
+        commit_author=$(git log -1 --pretty=%an)
+        echo "commit_message=$commit_message" >> $GITHUB_ENV
+        echo "commit_author=$commit_author" >> $GITHUB_ENV
+
+    - name: Update ChangeLog
+      run: |
+        echo "## v${{ env.new_version }} - $(date +'%Y-%m-%d')" >> ChangeLog.md
+        echo "- Last commit by ${{ env.commit_author }}: ${{ env.commit_message }}" >> ChangeLog.md
+    
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add setup.py ChangeLog.md
+        git commit -m "Bump version to ${{ env.new_version }} and update ChangeLog"
+        git push
+
 
   build:
     needs: prepare
@@ -30,8 +51,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9, 3.11]
-        os: [ubuntu-latest, macos-latest]
+        python-version: [3.11]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
