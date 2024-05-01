@@ -21,81 +21,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Change directory and set up Rust Toolchain
-      run: |
-        cd mystik_core
-        echo "Working directory: $PWD"
-        rustup toolchain install stable
-        rustup default stable
-        rustup update
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install flake8 build twine
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-    - name: Lint with flake8
-      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-
-    - name: Compile Mystik Core
-      working-directory: ./mystik_core
-      run: |
-        python_release=${{ matrix.python-version }}
-        python_release=${python_release/./}
-        maturin build --release --strip
-        cp ./target/release/libmystik_core.so ../mystik/mystik_core.cpython-${python_release}-x86_64-linux-gnu.so
-
-    - name: Build the package
-      run: python -m build
-
-    - name: Upload to PyPI
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        twine upload dist/*
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: artifacts-${{ matrix.python-version }}
-        path: ./dist/*
-        if-no-files-found: error
-        retention-days: 90
-
-
-name: Python Application Workflow
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-name: Python package
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11"]
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -115,7 +40,7 @@ jobs:
       run: python -m build
 
     - name: Build and publish
-      if: success()  # This will run if previous steps were successful
+      if: success()
       run: |
         twine upload dist/*
       env:
@@ -123,7 +48,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 
     - name: Upload artifacts
-      if: success()  # This will run if previous steps were successful
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: artifacts-${{ matrix.python-version }}
