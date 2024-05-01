@@ -8,7 +8,38 @@ on:
   workflow_dispatch:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version.outputs.new_version }}
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Extract current version
+      id: current_version
+      run: echo "::set-output name=version::$(python -c "import setup; print(setup.__version__)")"
+      
+    - name: Increment version
+      id: version
+      run: |
+        current_version="${{ steps.current_version.outputs.version }}"
+        IFS='.' read -ra VERSION <<< "$current_version"
+        VERSION[-1]=$((VERSION[-1]+1))
+        new_version="${VERSION[*]}"
+        echo "::set-output name=new_version::${new_version// /.}"
+        
+    - name: Update version in setup.py
+      run: |
+        sed -i "s/version='${{ steps.current_version.outputs.version }}'/version='${{ steps.version.outputs.new_version }}'/g" setup.py
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -am "Bump version to ${{ steps.version.outputs.new_version }}"
+        git push
+
+
   build:
+    needs: prepare
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

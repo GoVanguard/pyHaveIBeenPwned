@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyHaveIBeenPwned",
-    version="0.1.7",
+    version="0.1.8",
     author="Shane Scott",
     author_email="sscott@gotham-security.com",
     description="Library to query HaveIBeenPwned.com with handeling for CloudFlare anti-bot ",
@@ -13,11 +13,17 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/GoVanguard/pyHaveIBeenPwned",
     packages=['pyHaveIBeenPwned'],
-    classifiers=(
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-        'Programming Language :: Python :: 3.6',
-        'Operating System :: OS Independent',
-    ),
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX :: Linux',
+        'Topic :: Software Development :: Libraries',
+    ],
+    python_requires='>=3.9',
 )
