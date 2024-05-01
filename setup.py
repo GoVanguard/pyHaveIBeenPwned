@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyHaveIBeenPwned",
-    version="0.1.6",
+    version="0.1.7",
     author="Shane Scott",
-    author_email="sscott@gvit.com",
+    author_email="sscott@gotham-security.com",
     description="Library to query HaveIBeenPwned.com with handeling for CloudFlare anti-bot ",
     long_description=long_description,
     long_description_content_type="text/markdown",
