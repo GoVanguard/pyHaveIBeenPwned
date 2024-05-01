@@ -20,7 +20,7 @@ jobs:
       run: |
         version=$(sed -n "s/^ *version=['\"]\([^'\"]*\)['\"],/\1/p" setup.py)
         new_version=$(echo $version | awk -F. -v OFS=. '{$NF += 1; print}')
-        sed -i "s/version=['\"]$version['\"]\b/version='$new_version'/g" setup.py
+        sed -i "s;$version;$new_version;g" setup.py
         echo "new_version=$new_version" >> $GITHUB_ENV
 
     - name: Get last commit details
