@@ -2,18 +2,18 @@ name: Python package
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: [3.9, 3.10, 3.11]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -38,7 +38,7 @@ jobs:
         semgrep --config=p/r2c
 
     - name: Build the package
-      run: python -m build
+      run: python setup.py sdist bdist_wheel
 
     - name: Build and publish
       if: success()
@@ -52,7 +52,7 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: artifacts-${{ matrix.python-version }}
-        path: ./dist/*
+        name: dist-${{ matrix.python-version }}-${{ matrix.os }}
+        path: dist/*
         if-no-files-found: error
         retention-days: 90
