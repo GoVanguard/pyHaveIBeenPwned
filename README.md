@@ -1,4 +1,4 @@
-pyHaveIBeenPwned (https://govanguard.com)
+pyHaveIBeenPwned (https://gotham-security.com)
 ==
 [![Python package](https://github.com/GoVanguard/pyHaveIBeenPwned/actions/workflows/master.yml/badge.svg)](https://github.com/GoVanguard/pyHaveIBeenPwned/actions/workflows/master.yml)
 [![Known Vulnerabilities](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/GoVanguard/pyHaveIBeenPwned?targetFile=requirements.txt)
