@@ -1,3 +1,9 @@
+## NOTICE
+
+The pyHaveIBeenPwned repository is moving to https://github.com/Hackman238/pyHaveIBeenPwned. All future releases, updates, etc will occur from there.
+
+##
+
 pyHaveIBeenPwned (https://gotham-security.com)
 ==
 [![Python package](https://github.com/GoVanguard/pyHaveIBeenPwned/actions/workflows/master.yml/badge.svg)](https://github.com/GoVanguard/pyHaveIBeenPwned/actions/workflows/master.yml)
